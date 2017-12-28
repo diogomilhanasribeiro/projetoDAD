@@ -6,9 +6,11 @@
     <router-link to="/users">Administrator</router-link> -
     <router-link to="/logout">Logout</router-link> -
     <router-link to="/profile">Profile</router-link> - 
-    <router-link to="/password">Password Change</router-link> -
+    <router-link to="/password">Password Change</router-link> 
 
     <router-view></router-view>
+
+    
 @endsection
 
 @section('pagescript')
