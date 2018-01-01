@@ -495,7 +495,8 @@ module.exports = function normalizeComponent (
 var API_URL = 'http://projetodad.dad/api/';
 var LOGIN_URL = API_URL + 'login';
 var SIGNUP_URL = API_URL + 'users/';
-var PASSWORD_URL = API_URL + 'password';
+var PASSWORD_URL = API_URL + 'adminChangePassword';
+var EMAIL_URL = API_URL + 'adminForgotPassword';
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   // User object will let us check authentication status
@@ -550,7 +551,6 @@ var PASSWORD_URL = API_URL + 'password';
         if (creds.newpassword == creds.confirmationPassword) {
           axios.post(PASSWORD_URL, creds).then(function (response) {
             localStorage.setItem('access_token', response.access_token);
-            //localStorage.setItem('scope', response.scope);
             console.log(response.data);
             _this2.user.authenticated = true;
             if (redirect) {
@@ -573,17 +573,31 @@ var PASSWORD_URL = API_URL + 'password';
       return false;
     }
   },
+  forgotPassword: function forgotPassword(creds, redirect) {
+    var _this3 = this;
+
+    axios.post(EMAIL_URL, creds).then(function (response) {
+      localStorage.setItem('access_token', response.access_token);
+      console.log(response.data);
+      _this3.user.authenticated = true;
+      if (redirect) {
+        __WEBPACK_IMPORTED_MODULE_0__app__["router"].push(redirect);
+      }
+    }).catch(function (error) {
+      console.log(error);
+    });
+  },
 
 
   /////////////////////////////
   signup: function signup(context, creds, redirect) {
-    var _this3 = this;
+    var _this4 = this;
 
     context.$http.post(SIGNUP_URL, creds, function (data) {
       localStorage.setItem('id_token', data.id_token);
       localStorage.setItem('access_token', data.access_token);
 
-      _this3.user.authenticated = true;
+      _this4.user.authenticated = true;
 
       if (redirect) {
         __WEBPACK_IMPORTED_MODULE_0__app__["router"].go(redirect);
@@ -1059,9 +1073,10 @@ var user = Vue.component('user', __webpack_require__(43));
 var login = Vue.component('login', __webpack_require__(59));
 var logout = Vue.component('logout', __webpack_require__(62));
 var profile = Vue.component('profile', __webpack_require__(65));
-var password = Vue.component('password', __webpack_require__(68));
+var adminChangePassword = Vue.component('adminChangePassword', __webpack_require__(83));
+var adminForgotPassword = Vue.component('adminForgotPassword', __webpack_require__(86));
 
-var routes = [{ path: '/', component: login }, { path: '/users', component: user }, { path: '/logout', component: logout }, { path: '/profile', component: profile }, { path: '/password', component: password }];
+var routes = [{ path: '/', component: login }, { path: '/users', component: user }, { path: '/logout', component: logout }, { path: '/profile', component: profile }, { path: '/adminChangePassword', component: adminChangePassword }, { path: '/adminForgotPassword', component: adminForgotPassword }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   routes: routes
@@ -1535,7 +1550,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(7);
-module.exports = __webpack_require__(71);
+module.exports = __webpack_require__(74);
 
 
 /***/ }),
@@ -47082,15 +47097,35 @@ if (false) {
 }
 
 /***/ }),
-/* 68 */
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(69)
+var __vue_script__ = __webpack_require__(84)
 /* template */
-var __vue_template__ = __webpack_require__(70)
+var __vue_template__ = __webpack_require__(85)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -47107,7 +47142,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/admin/password.vue"
+Component.options.__file = "resources/assets/js/components/admin/adminChangePassword.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -47117,9 +47152,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-622ff7f3", Component.options)
+    hotAPI.createRecord("data-v-11d78e1c", Component.options)
   } else {
-    hotAPI.reload("data-v-622ff7f3", Component.options)
+    hotAPI.reload("data-v-11d78e1c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47130,13 +47165,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 69 */
+/* 84 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_index_js__ = __webpack_require__(2);
-//
 //
 //
 //
@@ -47201,7 +47235,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 70 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47210,8 +47244,6 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
     _c("h2", [_vm._v("Change password")]),
-    _vm._v(" "),
-    _c("p", [_vm._v("Change password.")]),
     _vm._v(" "),
     _vm.error
       ? _c("div", { staticClass: "alert alert-danger" }, [
@@ -47309,15 +47341,176 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-622ff7f3", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-11d78e1c", module.exports)
   }
 }
 
 /***/ }),
-/* 71 */
-/***/ (function(module, exports) {
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/admin/adminForgotPassword.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-07ba73e5", Component.options)
+  } else {
+    hotAPI.reload("data-v-07ba73e5", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_index_js__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      // We need to initialize the component with any
+      // properties that will be used in it
+      credentials: {
+        email: ''
+      },
+      error: ''
+    };
+  },
+
+  methods: {
+    submit: function submit() {
+      var credentials = {
+        email: this.credentials.email
+      };
+      __WEBPACK_IMPORTED_MODULE_0__auth_index_js__["a" /* default */].forgotPassword(credentials, '/');
+    }
+  }
+});
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+    _c("h2", [_vm._v("Forgot password")]),
+    _vm._v(" "),
+    _vm.error
+      ? _c("div", { staticClass: "alert alert-danger" }, [
+          _c("p", [_vm._v(_vm._s(_vm.error))])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.credentials.email,
+            expression: "credentials.email"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Enter your email" },
+        domProps: { value: _vm.credentials.email },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.credentials, "email", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.submit()
+          }
+        }
+      },
+      [_vm._v("Submit")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-07ba73e5", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -2,7 +2,6 @@
   <template>
     <div class="col-md-8 col-md-offset-2">
       <h2>Change password</h2>
-      <p>Change password.</p>
       <div class="alert alert-danger" v-if="error">
         <p>{{ error }}</p>
       </div>
