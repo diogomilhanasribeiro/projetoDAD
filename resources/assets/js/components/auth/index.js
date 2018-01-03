@@ -92,9 +92,16 @@ export default {
 
  },
 
+setAdminEmail(creds, redirect){
+
+},
+
+setPlatEmail(creds, redirect){
+
+},
 
  forgotPassword(creds, redirect) {
-  axios.post(EMAIL_URL, {
+  /*axios.post(EMAIL_URL, {
       email: creds.email,
     }).then((response) => {
     localStorage.setItem('access_token', response.access_token);
@@ -105,7 +112,7 @@ export default {
     }
   }).catch((error) => {
     console.log(error);
-  });
+  });*/
 },
 
 /////////////////////////////

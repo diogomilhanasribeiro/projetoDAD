@@ -495,8 +495,8 @@ module.exports = function normalizeComponent (
 var API_URL = 'http://projetodad.dad/api/';
 var LOGIN_URL = API_URL + 'login';
 var SIGNUP_URL = API_URL + 'users/';
-var PASSWORD_URL = API_URL + 'adminChangePassword';
-var EMAIL_URL = API_URL + 'adminForgotPassword';
+var PASSWORD_URL = API_URL + 'changePassword';
+var EMAIL_URL = API_URL + 'forgotPassword';
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   // User object will let us check authentication status
@@ -573,31 +573,33 @@ var EMAIL_URL = API_URL + 'adminForgotPassword';
       return false;
     }
   },
+  setAdminEmail: function setAdminEmail(creds, redirect) {},
+  setPlatEmail: function setPlatEmail(creds, redirect) {},
   forgotPassword: function forgotPassword(creds, redirect) {
-    var _this3 = this;
-
-    axios.post(EMAIL_URL, creds).then(function (response) {
+    /*axios.post(EMAIL_URL, {
+        email: creds.email,
+      }).then((response) => {
       localStorage.setItem('access_token', response.access_token);
       console.log(response.data);
-      _this3.user.authenticated = true;
-      if (redirect) {
-        __WEBPACK_IMPORTED_MODULE_0__app__["router"].push(redirect);
+      this.user.authenticated = true;
+      if(redirect) {
+        router.push(redirect);
       }
-    }).catch(function (error) {
+    }).catch((error) => {
       console.log(error);
-    });
+    });*/
   },
 
 
   /////////////////////////////
   signup: function signup(context, creds, redirect) {
-    var _this4 = this;
+    var _this3 = this;
 
     context.$http.post(SIGNUP_URL, creds, function (data) {
       localStorage.setItem('id_token', data.id_token);
       localStorage.setItem('access_token', data.access_token);
 
-      _this4.user.authenticated = true;
+      _this3.user.authenticated = true;
 
       if (redirect) {
         __WEBPACK_IMPORTED_MODULE_0__app__["router"].go(redirect);
@@ -1073,18 +1075,20 @@ var user = Vue.component('user', __webpack_require__(43));
 var login = Vue.component('login', __webpack_require__(59));
 var logout = Vue.component('logout', __webpack_require__(62));
 var profile = Vue.component('profile', __webpack_require__(65));
-var adminChangePassword = Vue.component('adminChangePassword', __webpack_require__(83));
-var adminForgotPassword = Vue.component('adminForgotPassword', __webpack_require__(86));
+var changePassword = Vue.component('changePassword', __webpack_require__(68));
+var forgotPassword = Vue.component('forgotPassword', __webpack_require__(71));
+var adminEmail = Vue.component('adminEmail', __webpack_require__(83));
+var platEmail = Vue.component('platEmail', __webpack_require__(86));
 
-var routes = [{ path: '/', component: login }, { path: '/users', component: user }, { path: '/logout', component: logout }, { path: '/profile', component: profile }, { path: '/adminChangePassword', component: adminChangePassword }, { path: '/adminForgotPassword', component: adminForgotPassword }];
+var routes = [{ path: '/', component: login }, { path: '/users', component: user }, { path: '/logout', component: logout }, { path: '/profile', component: profile }, { path: '/changePassword', component: changePassword }, { path: '/forgotPassword', component: forgotPassword }, { path: '/adminEmail', component: adminEmail }, { path: '/platEmail', component: platEmail }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-  routes: routes
+	routes: routes
 });
 
 var app = new Vue({
-  router: router,
-  data: {}
+	router: router,
+	data: {}
 }).$mount('#app');
 
 /***/ }),
@@ -47097,35 +47101,15 @@ if (false) {
 }
 
 /***/ }),
-/* 68 */,
-/* 69 */,
-/* 70 */,
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(84)
+var __vue_script__ = __webpack_require__(69)
 /* template */
-var __vue_template__ = __webpack_require__(85)
+var __vue_template__ = __webpack_require__(70)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -47142,7 +47126,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/admin/adminChangePassword.vue"
+Component.options.__file = "resources/assets/js/components/admin/changePassword.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -47152,9 +47136,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-11d78e1c", Component.options)
+    hotAPI.createRecord("data-v-48f527c3", Component.options)
   } else {
-    hotAPI.reload("data-v-11d78e1c", Component.options)
+    hotAPI.reload("data-v-48f527c3", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47165,7 +47149,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 84 */
+/* 69 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47235,7 +47219,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 85 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47341,20 +47325,20 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-11d78e1c", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-48f527c3", module.exports)
   }
 }
 
 /***/ }),
-/* 86 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(87)
+var __vue_script__ = __webpack_require__(72)
 /* template */
-var __vue_template__ = __webpack_require__(88)
+var __vue_template__ = __webpack_require__(73)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -47371,7 +47355,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/components/admin/adminForgotPassword.vue"
+Component.options.__file = "resources/assets/js/components/admin/forgotPassword.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -47381,9 +47365,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-07ba73e5", Component.options)
+    hotAPI.createRecord("data-v-599b62b6", Component.options)
   } else {
-    hotAPI.reload("data-v-07ba73e5", Component.options)
+    hotAPI.reload("data-v-599b62b6", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -47394,7 +47378,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 87 */
+/* 72 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47446,7 +47430,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 88 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47508,7 +47492,344 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-07ba73e5", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-599b62b6", module.exports)
+  }
+}
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(84)
+/* template */
+var __vue_template__ = __webpack_require__(85)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/admin/adminEmail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0ac71436", Component.options)
+  } else {
+    hotAPI.reload("data-v-0ac71436", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_index_js__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      // We need to initialize the component with any
+      // properties that will be used in it
+      credentials: {
+        email: ''
+      },
+      error: ''
+    };
+  },
+
+  methods: {
+    submitPlat: function submitPlat() {
+      var credentials = {
+        platEmail: this.credentials.platEmail
+      };
+      __WEBPACK_IMPORTED_MODULE_0__auth_index_js__["a" /* default */].setPlatEmail(credentials, '/');
+    }
+  }
+});
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+    _c("h2", [_vm._v("Administrator Email")]),
+    _vm._v(" "),
+    _vm.error
+      ? _c("div", { staticClass: "alert alert-danger" }, [
+          _c("p", [_vm._v(_vm._s(_vm.error))])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.credentials.adminEmail,
+            expression: "credentials.adminEmail"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Enter administrator email" },
+        domProps: { value: _vm.credentials.adminEmail },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.credentials, "adminEmail", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.submitAdmin()
+          }
+        }
+      },
+      [_vm._v("Submit")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0ac71436", module.exports)
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/admin/platEmail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-780d4185", Component.options)
+  } else {
+    hotAPI.reload("data-v-780d4185", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__auth_index_js__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      // We need to initialize the component with any
+      // properties that will be used in it
+      credentials: {
+        email: ''
+      },
+      error: ''
+    };
+  },
+
+  methods: {
+    submitPlat: function submitPlat() {
+      var credentials = {
+        platEmail: this.credentials.platEmail
+      };
+      __WEBPACK_IMPORTED_MODULE_0__auth_index_js__["a" /* default */].setPlatEmail(credentials, '/');
+    }
+  }
+});
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "col-md-8 col-md-offset-2" }, [
+    _c("h2", [_vm._v("Plataform Email")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.credentials.platEmail,
+            expression: "credentials.platEmail"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: { type: "text", placeholder: "Enter plataform email" },
+        domProps: { value: _vm.credentials.platEmail },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.credentials, "platEmail", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            _vm.submitPlat()
+          }
+        }
+      },
+      [_vm._v("Submit")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-780d4185", module.exports)
   }
 }
 
