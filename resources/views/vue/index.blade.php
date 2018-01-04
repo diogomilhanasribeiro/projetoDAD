@@ -6,7 +6,7 @@
     <router-link to="/users">Administrator</router-link> -
     <router-link to="/logout">Logout</router-link> -
     <router-link to="/profile">Profile</router-link> - 
-    <router-link to="/changePassword">Password Change</router-link> -
+    <router-link to="/changePassword">Change Password</router-link> -
     <router-link to="/forgotPassword">Forgot Password</router-link> -
     <router-link to="/adminEmail">Configure Admin Email</router-link> -
     <router-link to="/platEmail">Configure Platform Email</router-link> 

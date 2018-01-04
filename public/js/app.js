@@ -495,8 +495,10 @@ module.exports = function normalizeComponent (
 var API_URL = 'http://projetodad.dad/api/';
 var LOGIN_URL = API_URL + 'login';
 var SIGNUP_URL = API_URL + 'users/';
-var PASSWORD_URL = API_URL + 'changePassword';
-var EMAIL_URL = API_URL + 'forgotPassword';
+var PASSWORDCHANGE_URL = API_URL + 'changePassword';
+var EMAILPASSWORDFORGOT_URL = API_URL + 'forgotPassword';
+var ADMINEMAIL_URL = API_URL + 'adminEmail';
+var PLATEMAIL_URL = API_URL + 'platEmail';
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   // User object will let us check authentication status
@@ -549,7 +551,7 @@ var EMAIL_URL = API_URL + 'forgotPassword';
     if (creds.oldpassword != "" && creds.newpassword != "" && creds.confirmationPassword != "") {
       if (creds.oldpassword != creds.newpassword) {
         if (creds.newpassword == creds.confirmationPassword) {
-          axios.post(PASSWORD_URL, creds).then(function (response) {
+          axios.post(PASSWORDCHANGE_URL, creds).then(function (response) {
             localStorage.setItem('access_token', response.access_token);
             console.log(response.data);
             _this2.user.authenticated = true;
@@ -573,21 +575,41 @@ var EMAIL_URL = API_URL + 'forgotPassword';
       return false;
     }
   },
-  setAdminEmail: function setAdminEmail(creds, redirect) {},
-  setPlatEmail: function setPlatEmail(creds, redirect) {},
-  forgotPassword: function forgotPassword(creds, redirect) {
-    /*axios.post(EMAIL_URL, {
-        email: creds.email,
-      }).then((response) => {
-      localStorage.setItem('access_token', response.access_token);
-      console.log(response.data);
-      this.user.authenticated = true;
-      if(redirect) {
-        router.push(redirect);
+  setAdminEmail: function setAdminEmail(creds, redirect) {
+    axios.post(ADMINEMAIL_URL, {
+      email: creds.email
+    }).then(function (response) {
+      if (redirect) {
+        __WEBPACK_IMPORTED_MODULE_0__app__["router"].push(redirect);
       }
-    }).catch((error) => {
+    }).catch(function (error) {
       console.log(error);
-    });*/
+    });
+    console.log(creds.email);
+  },
+  setPlatEmail: function setPlatEmail(creds, redirect) {
+    axios.post(PLATEMAIL_URL, {
+      email: creds.email
+    }).then(function (response) {
+      if (redirect) {
+        __WEBPACK_IMPORTED_MODULE_0__app__["router"].push(redirect);
+      }
+    }).catch(function (error) {
+      console.log(error);
+    });
+    console.log(creds.email);
+  },
+  forgotPassword: function forgotPassword(creds, redirect) {
+    axios.post(EMAILPASSWORDFORGOT_URL, {
+      email: creds.email
+    }).then(function (response) {
+      if (redirect) {
+        __WEBPACK_IMPORTED_MODULE_0__app__["router"].push(redirect);
+      }
+    }).catch(function (error) {
+      console.log(error);
+    });
+    console.log(creds.email);
   },
 
 
@@ -1077,8 +1099,8 @@ var logout = Vue.component('logout', __webpack_require__(62));
 var profile = Vue.component('profile', __webpack_require__(65));
 var changePassword = Vue.component('changePassword', __webpack_require__(68));
 var forgotPassword = Vue.component('forgotPassword', __webpack_require__(71));
-var adminEmail = Vue.component('adminEmail', __webpack_require__(83));
-var platEmail = Vue.component('platEmail', __webpack_require__(86));
+var adminEmail = Vue.component('adminEmail', __webpack_require__(74));
+var platEmail = Vue.component('platEmail', __webpack_require__(77));
 
 var routes = [{ path: '/', component: login }, { path: '/users', component: user }, { path: '/logout', component: logout }, { path: '/profile', component: profile }, { path: '/changePassword', component: changePassword }, { path: '/forgotPassword', component: forgotPassword }, { path: '/adminEmail', component: adminEmail }, { path: '/platEmail', component: platEmail }];
 
@@ -1554,7 +1576,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(7);
-module.exports = __webpack_require__(74);
+module.exports = __webpack_require__(80);
 
 
 /***/ }),
@@ -47498,28 +47520,14 @@ if (false) {
 
 /***/ }),
 /* 74 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 75 */,
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(84)
+var __vue_script__ = __webpack_require__(75)
 /* template */
-var __vue_template__ = __webpack_require__(85)
+var __vue_template__ = __webpack_require__(76)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -47559,7 +47567,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 84 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47600,17 +47608,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    submitPlat: function submitPlat() {
+    submit: function submit() {
       var credentials = {
-        platEmail: this.credentials.platEmail
+        email: this.credentials.email
       };
-      __WEBPACK_IMPORTED_MODULE_0__auth_index_js__["a" /* default */].setPlatEmail(credentials, '/');
+      __WEBPACK_IMPORTED_MODULE_0__auth_index_js__["a" /* default */].setAdminEmail(credentials, '/');
     }
   }
 });
 
 /***/ }),
-/* 85 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47634,19 +47642,19 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.credentials.adminEmail,
-            expression: "credentials.adminEmail"
+            value: _vm.credentials.email,
+            expression: "credentials.email"
           }
         ],
         staticClass: "form-control",
         attrs: { type: "text", placeholder: "Enter administrator email" },
-        domProps: { value: _vm.credentials.adminEmail },
+        domProps: { value: _vm.credentials.email },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.$set(_vm.credentials, "adminEmail", $event.target.value)
+            _vm.$set(_vm.credentials, "email", $event.target.value)
           }
         }
       })
@@ -47658,7 +47666,7 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
-            _vm.submitAdmin()
+            _vm.submit()
           }
         }
       },
@@ -47677,15 +47685,15 @@ if (false) {
 }
 
 /***/ }),
-/* 86 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(87)
+var __vue_script__ = __webpack_require__(78)
 /* template */
-var __vue_template__ = __webpack_require__(88)
+var __vue_template__ = __webpack_require__(79)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -47725,7 +47733,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 87 */
+/* 78 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47763,9 +47771,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    submitPlat: function submitPlat() {
+    submit: function submit() {
       var credentials = {
-        platEmail: this.credentials.platEmail
+        email: this.credentials.email
       };
       __WEBPACK_IMPORTED_MODULE_0__auth_index_js__["a" /* default */].setPlatEmail(credentials, '/');
     }
@@ -47773,7 +47781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 88 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -47791,19 +47799,19 @@ var render = function() {
           {
             name: "model",
             rawName: "v-model",
-            value: _vm.credentials.platEmail,
-            expression: "credentials.platEmail"
+            value: _vm.credentials.email,
+            expression: "credentials.email"
           }
         ],
         staticClass: "form-control",
         attrs: { type: "text", placeholder: "Enter plataform email" },
-        domProps: { value: _vm.credentials.platEmail },
+        domProps: { value: _vm.credentials.email },
         on: {
           input: function($event) {
             if ($event.target.composing) {
               return
             }
-            _vm.$set(_vm.credentials, "platEmail", $event.target.value)
+            _vm.$set(_vm.credentials, "email", $event.target.value)
           }
         }
       })
@@ -47815,7 +47823,7 @@ var render = function() {
         staticClass: "btn btn-primary",
         on: {
           click: function($event) {
-            _vm.submitPlat()
+            _vm.submit()
           }
         }
       },
@@ -47832,6 +47840,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-780d4185", module.exports)
   }
 }
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

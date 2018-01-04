@@ -8,10 +8,10 @@
       type="text"
       class="form-control"
       placeholder="Enter plataform email"
-      v-model="credentials.platEmail"
+      v-model="credentials.email"
       >
     </div>
-    <button class="btn btn-primary" @click="submitPlat()">Submit</button>
+    <button class="btn btn-primary" @click="submit()">Submit</button>
   </div>
 </template>
 
@@ -29,9 +29,9 @@
       }
     },
     methods: {
-      submitPlat() {
+      submit() {
         var credentials = {
-          platEmail: this.credentials.platEmail
+          email: this.credentials.email
         }
         auth.setPlatEmail(credentials, '/')
       }

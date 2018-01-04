@@ -5,8 +5,10 @@ import {router} from '../../app';
 const API_URL = 'http://projetodad.dad/api/'
 const LOGIN_URL = API_URL + 'login'
 const SIGNUP_URL = API_URL + 'users/'
-const PASSWORD_URL = API_URL + 'changePassword'
-const EMAIL_URL = API_URL + 'forgotPassword'
+const PASSWORDCHANGE_URL = API_URL + 'changePassword'
+const EMAILPASSWORDFORGOT_URL = API_URL + 'forgotPassword'
+const ADMINEMAIL_URL = API_URL + 'adminEmail'
+const PLATEMAIL_URL = API_URL + 'platEmail'
 
 
 export default {
@@ -60,7 +62,7 @@ export default {
         {
           if(creds.newpassword==creds.confirmationPassword)
           {
-            axios.post(PASSWORD_URL,creds).then((response) => {
+            axios.post(PASSWORDCHANGE_URL,creds).then((response) => {
               localStorage.setItem('access_token', response.access_token);
               console.log(response.data);
               this.user.authenticated = true;
@@ -92,27 +94,43 @@ export default {
 
  },
 
-setAdminEmail(creds, redirect){
-
-},
-
-setPlatEmail(creds, redirect){
-
-},
-
- forgotPassword(creds, redirect) {
-  /*axios.post(EMAIL_URL, {
-      email: creds.email,
-    }).then((response) => {
-    localStorage.setItem('access_token', response.access_token);
-    console.log(response.data);
-    this.user.authenticated = true;
+ setAdminEmail(creds, redirect){
+  axios.post(ADMINEMAIL_URL, {
+    email: creds.email
+  }).then((response) => {
     if(redirect) {
       router.push(redirect);
     }
   }).catch((error) => {
     console.log(error);
-  });*/
+  });
+  console.log(creds.email);
+},
+
+setPlatEmail(creds, redirect){
+ axios.post(PLATEMAIL_URL, {
+  email: creds.email
+}).then((response) => {
+  if(redirect) {
+    router.push(redirect);
+  }
+}).catch((error) => {
+  console.log(error);
+});
+console.log(creds.email);
+},
+
+forgotPassword(creds, redirect) {
+  axios.post(EMAILPASSWORDFORGOT_URL, {
+    email: creds.email
+  }).then((response) => {
+    if(redirect) {
+      router.push(redirect);
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+  console.log(creds.email);
 },
 
 /////////////////////////////

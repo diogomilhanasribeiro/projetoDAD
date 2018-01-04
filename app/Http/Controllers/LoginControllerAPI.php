@@ -7,8 +7,8 @@ use App\User;
 
 define('YOUR_SERVER_URL', 'http://projetodad.dad');
 // Check "oauth_clients" table for next 2 values:
-define('CLIENT_ID', '2');
-define('CLIENT_SECRET', 'gx8TTDCXQ5wY3wexjn2S4Y7oYq6YLZ3OZKRF1Se5');
+define('CLIENT_ID', '10');
+define('CLIENT_SECRET', 'MxfhbKAMm3U93HltaUzNApF0ezm3yRhB0KtDLauW');
 
 class LoginControllerAPI extends Controller
 {
@@ -20,9 +20,9 @@ class LoginControllerAPI extends Controller
                 'grant_type' => 'password',
                 'client_id' => CLIENT_ID,
                 'client_secret' => CLIENT_SECRET,
-                'username' => $request->email,
+                'email' => $request->email,
                 'password' => $request->password,
-                    'scope' => ''//$request->scope
+                'scope' => ''//$request->scope
                 ],
                 'exceptions' => false,
             ]);
@@ -45,24 +45,60 @@ class LoginControllerAPI extends Controller
     {
        // return $request->newpassword;
         $errorCode = '404';
-        if(Auth::guest()){
-         return response()->json(['msg'=>'User not logged in!'], $errorCode);     
-     }
 
-     if (bcrypt($request->oldpassword) == Auth::user()->password)
-        {
+        if(Auth::guest()){
+            return response()->json(['msg'=>'User not logged in!'], $errorCode);     
+        }
+
+        if (bcrypt($request->oldpassword) == Auth::user()->password){
             $errorCode = '200';
             $user = User::find(Auth::User()->id);
             $user->password = bcrypt($request->newpassword);
-           // Auth::user()->password = bcrypt($request->newpassword);
+            // Auth::user()->password = bcrypt($request->newpassword);
         }
-        if ($errorCode == '200') 
-        {
+        if ($errorCode == '200'){
             return json_decode((string) $response->getBody(), true);
         } else {
             return response()->json(['msg'=>'User credentials are invalid'], $errorCode);
         }
-        
+
     }
+
+    public function forgotPassword(Request $request){
+        $totalEmail = 0;
+        dd('$totalEmail');
+        if ($request->has('email') ) {
+            $totalEmail = DB::table('users')->where('email', '=', $request->email)->count();
+        }
+        if($totalEmail == 1){
+            // TODO Enviar link por email
+        }else{
+            return response()->json(['msg'=>'There is no account associated to this email'], $errorCode);
+        }
+        return response()->json($totalEmail == 1);
+    }
+
+    public function setAdminEmail(Request $request)
+    {
+        $errorCode = '404';
+
+        if(Auth::guest()){
+            return response()->json(['msg'=>'User not logged in!'], $errorCode);     
+        }
+
+        if (bcrypt($request->email) != Auth::user()->email){
+            $errorCode = '200';
+            $user = User::find(Auth::User()->id);
+            $user->email = bcrypt($request->email);
+               // Auth::user()->password = bcrypt($request->newpassword);
+        }
+        if ($errorCode == '200'){
+            return json_decode((string) $response->getBody(), true);
+        } else {
+            return response()->json(['msg'=>'Email already in use'], $errorCode);
+        }
+
+    }
+
 
 }

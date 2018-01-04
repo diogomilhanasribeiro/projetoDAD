@@ -28,21 +28,21 @@ Route::/*middleware(['auth:api', 'admin'])->*/get('users', 'UserControllerAPI@ge
 //Change Password
 Route::/*middleware('auth:api')->*/post('changePassword', 'LoginControllerAPI@changePassword');
 
-Route::/*middleware('auth:api')-> TODO */post('forgotPassword', 'LoginControllerAPI@changePassword');
+Route::/*middleware('auth:api')-> TODO */post('forgotPassword', 'LoginControllerAPI@forgotPassword');
 
-Route::/*middleware('auth:api')-> TODO */post('adminEmail', 'LoginControllerAPI@changePassword');
+Route::/*middleware('auth:api')-> TODO */post('adminEmail', 'LoginControllerAPI@setAdminEmail');
 
 Route::/*middleware('auth:api')-> TODO */post('platEmail', 'LoginControllerAPI@changePassword');
 
 
 //Admin Forgot Password
+/*
 Route::post('forgotPassword/email', 'Auth\AdminForgotPasswordController@sendResetLinkEmail')->name('admin.password.email');
 Route::get('forgotPassword/reset', 'Auth\AdminForgotPasswordController@showLinkRequestForm')->name('admin..password.request');
 
-//Admin 
 Route::post('forgotPassword/reset', 'Auth\AdminResetPasswordController@reset');
 Route::get('forgotPassword/reset/{token}', 'Auth\AdminResetPasswordController@showResetForm')->name('admin.password.reset');
-
+*/
 
 
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');

@@ -17,7 +17,7 @@ class Admin
     {
         $user = Auth::user();
         dd($user);
-        if ($user->admin == 1) {
+        if ($user->admin == 0) {
             return response(json_encode(['error' => 'Unauthorised']), 401)
                 ->header('Content-Type', 'text/json');
         }

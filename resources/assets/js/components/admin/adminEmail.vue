@@ -11,10 +11,10 @@
       type="text"
       class="form-control"
       placeholder="Enter administrator email"
-      v-model="credentials.adminEmail"
+      v-model="credentials.email"
       >
     </div>
-    <button class="btn btn-primary" @click="submitAdmin()">Submit</button>
+    <button class="btn btn-primary" @click="submit()">Submit</button>
   </div>
 </template>
 
@@ -32,11 +32,11 @@
       }
     },
     methods: {
-      submitPlat() {
+      submit() {
         var credentials = {
-          platEmail: this.credentials.platEmail
+          email: this.credentials.email
         }
-        auth.setPlatEmail(credentials, '/')
+        auth.setAdminEmail(credentials, '/')
       }
     }
   }
